@@ -21,8 +21,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseApiServices();
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.MapOpenApi();
     await app.InitialiseDatabaseAsync();
     app.MapScalarApiReference(options =>
@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
                 bearer.Token = "your-bearer-token";
             });
     });
-}
+// }
 
 app.UseHttpsRedirection();
 
