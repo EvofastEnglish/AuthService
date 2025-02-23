@@ -31,6 +31,7 @@ public class RegisterUserHandler
             }
             var eventMessage = user.Adapt<AuthRegisterEvent>();
             eventMessage.UserId = user.Id;
+            eventMessage.Username = user.UserName;
             await publishEndpoint.Publish(eventMessage, cancellationToken);        
         }
 
