@@ -30,6 +30,7 @@ public class RegisterUserHandler
                 throw new Exception(result.Errors.First().Description);
             }
             var eventMessage = user.Adapt<AuthRegisterEvent>();
+            eventMessage.UserId = user.Id;
             await publishEndpoint.Publish(eventMessage, cancellationToken);        
         }
 
