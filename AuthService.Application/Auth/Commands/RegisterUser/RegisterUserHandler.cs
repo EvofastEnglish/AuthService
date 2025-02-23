@@ -34,6 +34,10 @@ public class RegisterUserHandler
             eventMessage.Username = user.UserName;
             await publishEndpoint.Publish(eventMessage, cancellationToken);        
         }
-
-        return new RegisterUserResult(true);    }
+        else
+        {
+            throw new Exception($"User {user.UserName} already exists.");
+        }
+        return new RegisterUserResult(true);    
+    }
 }
