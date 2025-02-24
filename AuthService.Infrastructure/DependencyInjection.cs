@@ -30,7 +30,10 @@ public static class DependencyInjection
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.AddIdentityServer()
+        services.AddIdentityServer(options =>
+            {
+                options.IssuerUri = "https://evofast-identityserver.solocode.click";
+            })
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
             {
