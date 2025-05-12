@@ -26,4 +26,19 @@ public static class DependencyInjection
         app.UseIdentityServer();
         return app;
     }
+    
+    public static void AddCors(this IServiceCollection services, string? originString)
+    {
+        var origins = originString?.Split(";");
+
+        services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+        {
+            if (origins != null)
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .WithOrigins(origins);
+        }));
+    }
 }
