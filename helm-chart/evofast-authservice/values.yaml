@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: lieusolocode/evofast-authservice-aks
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8001
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  host: evofast-identityserver-dev.solocode.click
+  path: /
+  pathType: Prefix
+
+config:
+  allowedHosts: "*"
+  allowedOrigins: "http://localhost:3000;https://evofast.solocode.click;https://evofast-dev.solocode.click"
+  logLevelDefault: "Information"
+  logLevelMicrosoft: "Warning"
+
+secrets:
+  dbConnection: "Host=jastech-vn.postgres.database.azure.com; Database=AuthService; Username=lieudvq0302; Password=?s0D5Uip4DK{N9f6I:?g"
+  dbHangfire: "host=jastech-vn.postgres.database.azure.com;port=5432;database=AuthService_Hangfire;pooling=true;username=lieudvq0302;password=?s0D5Uip4DK{N9f6I:?g"
+  brokerHost: "amqp://rabbitmq:5672"
+  brokerUsername: "evofast"
+  brokerPassword: "password123@"
