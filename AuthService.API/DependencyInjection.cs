@@ -23,6 +23,7 @@ public static class DependencyInjection
         });
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCors("CorsPolicy");
         app.UseIdentityServer();
         return app;
     }
