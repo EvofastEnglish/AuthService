@@ -33,7 +33,6 @@ public static class DependencyInjection
         services.AddIdentityServer(options =>
             {
                 options.IssuerUri = configuration["Issuer"];
-                options.EmitStaticAudienceClaim = true;
             })
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
