@@ -32,7 +32,7 @@ public static class DependencyInjection
 
         services.AddIdentityServer(options =>
             {
-                options.IssuerUri = configuration["Issuer"];
+                options.IssuerUri = "https://evofast-identityserver.evofast-app.com";
             })
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
