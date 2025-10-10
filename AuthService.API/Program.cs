@@ -28,7 +28,7 @@ app.UseApiServices();
     await app.InitialiseDatabaseAsync();
     app.MapScalarApiReference(options =>
     {
-        options.Title = "Evofast IdentityServer";
+        options.Title = "Evofast IdentityServer 0.0.1";
         options.ShowSidebar = true;
         options
             .WithPreferredScheme("Bearer")
