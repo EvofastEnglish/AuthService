@@ -24,6 +24,7 @@ public static class DependencyInjection
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors("CorsPolicy");
+        app.UseForwardedHeaders(); 
         app.UseIdentityServer();
         return app;
     }
