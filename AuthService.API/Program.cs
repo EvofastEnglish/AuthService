@@ -3,10 +3,19 @@ using AuthService.Application;
 using AuthService.Infrastructure;
 using AuthService.Infrastructure.Extensions;
 using BuildingBlocks.Messaging.MassTransit;
+using Microsoft.AspNetCore.HttpOverrides;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
