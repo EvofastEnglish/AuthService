@@ -23,17 +23,21 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
-        
-        services.AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddUserManager<UserManager<ApplicationUser>>()
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+                options.Lockout.AllowedForNewUsers = false;
+            }).AddUserManager<UserManager<ApplicationUser>>()
             .AddRoleManager<RoleManager<ApplicationRole>>()
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.AddIdentityServer(options =>
-            {
-                options.IssuerUri = configuration["Issuer"];
-            })
+        services.AddIdentityServer(options => { options.IssuerUri = configuration["Issuer"]; })
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
             {
@@ -44,11 +48,11 @@ public static class DependencyInjection
             {
                 options.ConfigureDbContext = builder =>
                     builder.UseNpgsql(connectionString, opt => opt.MigrationsAssembly("AuthService.Infrastructure"));
-            })    
+            })
             .AddProfileService<CustomProfileService>();
         services.AddScoped<IResourceOwnerPasswordValidator, EmailOrUsernamePasswordValidator>();
 
-        
+
         services.AddAuthorization();
 
         services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
