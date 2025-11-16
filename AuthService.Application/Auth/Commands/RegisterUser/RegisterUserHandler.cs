@@ -1,4 +1,5 @@
 using AuthService.Domain.Models;
+using BuildingBlocks.Exceptions;
 using BuildingBlocks.Messaging.Events;
 using Mapster;
 using MassTransit;
@@ -36,7 +37,7 @@ public class RegisterUserHandler
         }
         else
         {
-            throw new Exception($"User {user.UserName} already exists.");
+            throw new BadRequestException($"ユーザー名 {user.UserName} は既に存在しております.");
         }
         return new RegisterUserResult(true);    
     }
